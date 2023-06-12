@@ -1,0 +1,86 @@
+*{
+    font: normal 1em Arial;
+}
+header{
+    width: 100%;
+    height: 176px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+header > #google{
+    width: 100vw;
+    margin-left: 50px;
+    margin-top: 15px;
+}
+header > #cab{
+    margin-right: 100px;
+    width: 100vw;
+}
+header > #cab > #titulo{
+    font-size: 1.2em;
+}
+header > #cab > #titulo > strong{
+    margin-top: 2px;
+    text-decoration: underline;
+    font-style: italic;
+}
+#container{
+    display: flex;
+}
+#divs{
+    margin-top: 20px;
+    border: solid 1px black;
+    width: 100vw;
+    height: 1000px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+#divs > a{
+    padding-bottom: 30px;
+}
+#divs > #parag{
+    text-align: center;
+    color: black;
+    text-decoration: underline;
+    margin-bottom: 20px;
+    font-size: 1.3em;
+}
+footer{
+    background-color: black;
+    text-align: center;
+    margin-top: 10px;
+    height: 50px;
+}
+footer > p{
+    font-size: 1.4em;
+    color: white;
+    padding: 10px;
+}
+@media screen and (max-width: 768px){
+    *{
+        font-size: 15px;
+    }
+    body{
+        overflow-x: hidden;
+    }
+    header{
+        display: flex;
+        flex-direction: column;
+    }
+    header > #google{
+        margin-top: 80px;
+        margin-left: 120px;
+    }
+    #container{
+        display: flex;
+        flex-direction: column;
+    }
+    #divs{
+        width: 100vw;
+    }
+    main{
+        margin-top: 70px;
+    }
+}
