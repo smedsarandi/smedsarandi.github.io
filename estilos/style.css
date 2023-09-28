@@ -32,7 +32,7 @@ header > #cab > #titulo > strong{
     margin-top: 20px;
     border: solid 1px black;
     width: 100vw;
-    height: 1000px;
+    height: auto;
     display: flex;
     flex-direction: column;
     text-align: center;
