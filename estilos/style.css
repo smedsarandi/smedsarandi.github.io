@@ -1,86 +1,160 @@
-*{
-    font: normal 1em Arial;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
-header{
-    width: 100%;
-    height: 176px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+    color: #333;
 }
-header > #google{
-    width: 100vw;
-    margin-left: 50px;
-    margin-top: 15px;
-}
-header > #cab{
-    margin-right: 100px;
-    width: 100vw;
-}
-header > #cab > #titulo{
-    font-size: 1.2em;
-}
-header > #cab > #titulo > strong{
-    margin-top: 2px;
-    text-decoration: underline;
-    font-style: italic;
-}
-#container{
-    display: flex;
-}
-#divs{
-    margin-top: 20px;
-    border: solid 1px black;
-    width: 100vw;
-    height: auto;
+
+header {
+    background: #333;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
     display: flex;
     flex-direction: column;
-    text-align: center;
+    align-items: center;
 }
-#divs > a{
-    padding-bottom: 30px;
+
+header #google {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
 }
-#divs > #parag{
-    text-align: center;
-    color: black;
-    text-decoration: underline;
-    margin-bottom: 20px;
-    font-size: 1.3em;
+
+header #google img {
+    max-height: 50px;
 }
-footer{
-    background-color: black;
-    text-align: center;
-    margin-top: 10px;
-    height: 50px;
+
+header #google form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
-footer > p{
-    font-size: 1.4em;
-    color: white;
+
+header #google input[type="text"] {
     padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    width: 200px;
 }
-@media screen and (max-width: 768px){
-    *{
-        font-size: 15px;
-    }
-    body{
-        overflow-x: hidden;
-    }
-    header{
-        display: flex;
+
+header #google input[type="submit"] {
+    padding: 10px 15px;
+    border: none;
+    background: #4285f4;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+header #google input[type="submit"]:hover {
+    background: #357ae8;
+}
+
+header #cab {
+    margin-top: 10px;
+    text-align: center;
+    max-width: 90%;
+}
+
+header #cab h1 {
+    font-size: 18px;
+}
+
+header #cab a {
+    color: white;
+    text-decoration: none;
+    border: 2px solid black;
+    border-radius: 4px;
+    padding: 2px 5px;
+}
+
+header #cab a:hover {
+    background-color: lightgray;
+    color: black;
+}
+
+main {
+    max-width: 1600px;
+    margin: 20px auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 0 20px;
+}
+
+#divs {
+    background: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+    flex: 1 1 250px;
+    max-width: 300px;
+}
+
+#divs h1 {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+#divs a {
+    display: block;
+    margin-bottom: 10px;
+    transition: transform 0.2s ease;
+}
+
+#divs a img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+#divs a:hover {
+    transform: scale(1.05);
+}
+
+footer {
+    text-align: center;
+    padding: 20px 0;
+    background: #333;
+    color: #fff;
+    margin-top: 20px;
+}
+
+footer p {
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+    main {
         flex-direction: column;
+        align-items: center;
     }
-    header > #google{
-        margin-top: 80px;
-        margin-left: 120px;
-    }
-    #container{
-        display: flex;
+
+    header #google, header #google form {
         flex-direction: column;
+        gap: 5px;
     }
-    #divs{
-        width: 100vw;
+
+    header #google img {
+        max-height: 30px;
     }
-    main{
-        margin-top: 70px;
+
+    header #cab h1 {
+        font-size: 14px;
+    }
+
+    #divs {
+        width: 90%;
+        flex: 1 1 100%;
+        max-width: 100%;
     }
 }
