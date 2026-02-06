@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Controle de Uniformes Escolares</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background-color: #f5f5f5;
+}
+
+.container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #2c3e50;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-size: 13px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 6px;
+    text-align: center;
+}
+
+th {
+    background-color: #3498db;
+    color: white;
+    position: sticky;
+    top: 0;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tr:hover {
+    background-color: #e9f5ff;
+}
+
+input[type="text"] {
+    width: 95%;
+    padding: 4px;
+}
+
+input[type="checkbox"] {
+    transform: scale(1.2);
+}
+
+button {
+    background-color: #2980b9;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 2px;
+}
+
+button:hover {
+    background-color: #3498db;
+}
+
+.actions {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+.totals {
+    margin-top: 30px;
+    background: #ecf0f1;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+.col-nome {
+    min-width: 220px;
+    max-width: 300px;
+}
+
+/* Cabeçalhos verticais dos totais */
+.totals th.vertical {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    white-space: nowrap;
+    padding: 6px 2px;
+    font-size: 11px;
+    height: 120px;
+    vertical-align: bottom;
+    text-align: center;
+}
+
+@media print {
+    button, input[type="file"] {
+        display: none;
+    }
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<h1>Planilha de Controle de Uniformes Escolares</h1>
+
+<div style="margin: 15px 0; text-align:center;">
+    <label><strong>Turma:</strong></label><br>
+    <input type="text" id="nomeTurma" placeholder="Ex: 5º Ano B - Manhã" style="width:300px; padding:6px;">
+</div>
+
+<div class="actions">
+    <div>
+        <button onclick="addRow()">Adicionar Aluno</button>
+        <button onclick="calculaTotais()">Calcular Totais</button>
+    </div>
+    <div>
+        <input type="file" id="csvInput" accept=".csv" onchange="importCSV(event)">
+        <button onclick="exportToCSV()">Exportar CSV</button>
+        <button onclick="window.print()">Imprimir</button>
+    </div>
+</div>
+
+<div style="overflow-x:auto">
+<table id="uniformesTable">
+<thead>
+<tr>
+    <th rowspan="2" class="col-nome">Aluno</th>
+    <th colspan="14">Camiseta</th>
+    <th colspan="14">Shorts/Saia</th>
+    <th colspan="14">Bermuda</th>
+    <th colspan="14">Calça</th>
+    <th colspan="14">Jaqueta</th>
+    <th colspan="12">Calçados</th>
+    <th rowspan="2">Ações</th>
+</tr>
+<tr id="sizesRow"></tr>
+</thead>
+<tbody></tbody>
+</table>
+</div>
+
+<div class="totals">
+<h2>Totais por Tamanho</h2>
+
+<div style="overflow-x:auto">
+<table>
+<thead>
+<tr id="totaisSizesRow"></tr>
+</thead>
+<tbody id="totaisBody"></tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+<script>
+const tamanhosRoupas = [2,4,6,8,10,11,12,14,16,'P','M','G','GG','EXG'];
+const tamanhosCalcados = Array.from({length:12}, (_,i) => i + 21);
+const itensRoupas = ['camiseta','shorts','bermuda','calca','jaqueta'];
+
+function criarCabecalhos() {
+    const sizesRow = document.getElementById('sizesRow');
+    const totaisSizesRow = document.getElementById('totaisSizesRow');
+
+    sizesRow.innerHTML = '';
+    totaisSizesRow.innerHTML = '<th>Item</th>';
+
+    for (let i = 0; i < itensRoupas.length; i++) {
+        tamanhosRoupas.forEach(t => {
+            sizesRow.innerHTML += `<th>${t}</th>`;
+        });
+    }
+
+    tamanhosCalcados.forEach(t => {
+        sizesRow.innerHTML += `<th>${t}</th>`;
+    });
+
+    tamanhosRoupas.forEach(t => {
+        totaisSizesRow.innerHTML += `<th class="vertical">${t}</th>`;
+    });
+
+    tamanhosCalcados.forEach(t => {
+        totaisSizesRow.innerHTML += `<th class="vertical">${t}</th>`;
+    });
+}
+
+function criarTabelaTotais() {
+    const body = document.getElementById('totaisBody');
+    body.innerHTML = '';
+
+    itensRoupas.forEach(item => {
+        let row = `<tr><td>${item}</td>`;
+        tamanhosRoupas.forEach(t => {
+            row += `<td id="${item}-${t}">0</td>`;
+        });
+        row += `<td colspan="12"></td></tr>`;
+        body.innerHTML += row;
+    });
+
+    let row = `<tr><td>Calçados</td><td colspan="14"></td>`;
+    tamanhosCalcados.forEach(t => {
+        row += `<td id="calcado-${t}">0</td>`;
+    });
+    row += `</tr>`;
+    body.innerHTML += row;
+}
+
+function addRow(data = []) {
+    const tbody = document.querySelector('#uniformesTable tbody');
+    const tr = document.createElement('tr');
+
+    tr.innerHTML = `
+        <td class="col-nome">
+            <input type="text" class="nome-aluno" value="${data[0] || ''}">
+        </td>
+    `;
+
+    let index = 1;
+
+    itensRoupas.forEach(() => {
+        tamanhosRoupas.forEach(() => {
+            tr.innerHTML += `<td><input type="checkbox" ${data[index++] === 'Sim' ? 'checked' : ''}></td>`;
+        });
+    });
+
+    tamanhosCalcados.forEach(() => {
+        tr.innerHTML += `<td><input type="checkbox" ${data[index++] === 'Sim' ? 'checked' : ''}></td>`;
+    });
+
+    tr.innerHTML += `
+        <td>
+            <button onclick="this.closest('tr').remove(); calculaTotais()">Excluir</button>
+        </td>
+    `;
+
+    tbody.appendChild(tr);
+}
+
+function calculaTotais() {
+    itensRoupas.forEach(item => {
+        tamanhosRoupas.forEach(t => {
+            document.getElementById(`${item}-${t}`).textContent = 0;
+        });
+    });
+
+    tamanhosCalcados.forEach(t => {
+        document.getElementById(`calcado-${t}`).textContent = 0;
+    });
+
+    document.querySelectorAll('#uniformesTable tbody tr').forEach(tr => {
+        let checkboxes = tr.querySelectorAll('input[type=checkbox]');
+        let idx = 0;
+
+        itensRoupas.forEach(item => {
+            tamanhosRoupas.forEach(t => {
+                if (checkboxes[idx++].checked) {
+                    document.getElementById(`${item}-${t}`).textContent++;
+                }
+            });
+        });
+
+        tamanhosCalcados.forEach(t => {
+            if (checkboxes[idx++].checked) {
+                document.getElementById(`calcado-${t}`).textContent++;
+            }
+        });
+    });
+}
+
+function exportToCSV() {
+    let csv = [];
+    const nomeTurma = document.getElementById('nomeTurma').value || 'Sem_Turma';
+
+    csv.push(`Turma,${nomeTurma}`);
+    csv.push('');
+
+    let header = ['Aluno'];
+
+    itensRoupas.forEach(item => {
+        tamanhosRoupas.forEach(t => {
+            header.push(`${item} ${t}`);
+        });
+    });
+
+    tamanhosCalcados.forEach(t => {
+        header.push(`Calçado ${t}`);
+    });
+
+    csv.push(header.join(','));
+
+    document.querySelectorAll('#uniformesTable tbody tr').forEach(tr => {
+        let row = [];
+        row.push(tr.querySelector('.nome-aluno').value || '');
+        tr.querySelectorAll('input[type=checkbox]').forEach(cb => {
+            row.push(cb.checked ? 'Sim' : 'Não');
+        });
+        csv.push(row.join(','));
+    });
+
+    const blob = new Blob([csv.join('\n')], { type: 'text/csv' });
+    const a = document.createElement('a');
+
+    const safeName = nomeTurma.replace(/[^\w\d]+/g, '_');
+    a.href = URL.createObjectURL(blob);
+    a.download = `uniformes_${safeName}.csv`;
+    a.click();
+}
+
+function importCSV(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = e => {
+        const lines = e.target.result.split('\n');
+        document.querySelector('#uniformesTable tbody').innerHTML = '';
+
+        let startIndex = 0;
+
+        if (lines[0].startsWith('Turma')) {
+            const turma = lines[0].split(',')[1] || '';
+            document.getElementById('nomeTurma').value = turma;
+            startIndex = 3;
+        }
+
+        for (let i = startIndex; i < lines.length; i++) {
+            if (lines[i].trim()) {
+                addRow(lines[i].split(',').map(v => v.trim()));
+            }
+        }
+
+        calculaTotais();
+    };
+
+    reader.readAsText(file);
+}
+
+criarCabecalhos();
+criarTabelaTotais();
+addRow();
+addRow();
+addRow();
+</script>
+
+</body>
+</html>
