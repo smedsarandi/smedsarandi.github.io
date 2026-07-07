@@ -1,0 +1,13 @@
+[
+	{
+		"id": 1783443450782,
+		"titulo": "Problema no WhatsApp",
+		"descricao": "Para corrigir o problema que atualmente está ocorrendo no whatsapp em que sua janela fica piscando e impossibilitando seu uso. Utilize o paso a paso clicando no botão a seguir.",
+		"imagem": "",
+		"botao": "Saiba mais",
+		"link": "falhawhatsapp.html",
+		"inicio": "2026-07-01",
+		"fim": "2026-07-31",
+		"prioridade": 1
+	}
+]

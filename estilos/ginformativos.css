@@ -1,0 +1,222 @@
+/* ===========================================
+   PAINEL ADMINISTRATIVO - SMED
+=========================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+
+    background:#eef2f7;
+    color:#333;
+
+}
+
+.container{
+
+    width:min(1000px,95%);
+    margin:40px auto;
+
+}
+
+h1{
+
+    color:#005BAC;
+    margin-bottom:25px;
+
+}
+
+h2{
+
+    margin:30px 0 15px;
+
+    color:#005BAC;
+
+}
+
+.card{
+
+    background:#fff;
+
+    border-radius:12px;
+
+    padding:25px;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.10);
+
+}
+
+label{
+
+    display:block;
+
+    margin-top:15px;
+
+    margin-bottom:6px;
+
+    font-weight:bold;
+
+}
+
+input,
+textarea{
+
+    width:100%;
+
+    padding:12px;
+
+    border:1px solid #d4d4d4;
+
+    border-radius:8px;
+
+    font-size:15px;
+
+}
+
+textarea{
+
+    resize:vertical;
+
+}
+
+.acoes{
+
+    margin-top:25px;
+
+    display:flex;
+
+    gap:15px;
+
+}
+
+button{
+
+    background:#005BAC;
+
+    color:#fff;
+
+    border:none;
+
+    border-radius:8px;
+
+    padding:12px 24px;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+    font-size:15px;
+
+}
+
+button:hover{
+
+    background:#00488c;
+
+}
+
+#listaInformativos{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:15px;
+
+}
+
+.item{
+
+    background:white;
+
+    border-left:6px solid #005BAC;
+
+    border-radius:10px;
+
+    padding:18px;
+
+    box-shadow:0 4px 10px rgba(0,0,0,.08);
+
+}
+
+.item h3{
+
+    color:#005BAC;
+
+    margin-bottom:10px;
+
+}
+
+.item p{
+
+    line-height:1.6;
+
+    margin-bottom:15px;
+
+}
+
+.item footer{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+}
+
+.botoes{
+
+    display:flex;
+
+    gap:10px;
+
+}
+
+.editar{
+
+    background:#ff9800;
+
+}
+
+.editar:hover{
+
+    background:#f57c00;
+
+}
+
+.excluir{
+
+    background:#d32f2f;
+
+}
+
+.excluir:hover{
+
+    background:#b71c1c;
+
+}
+
+@media(max-width:700px){
+
+    .acoes{
+
+        flex-direction:column;
+
+    }
+
+    footer{
+
+        flex-direction:column;
+
+        gap:15px;
+
+        align-items:flex-start;
+
+    }
+
+}

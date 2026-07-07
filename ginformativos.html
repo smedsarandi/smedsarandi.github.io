@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Painel de Informativos</title>
+
+<link rel="stylesheet" href="estilos/ginformativos.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>📢 Painel de Informativos</h1>
+
+<div class="card">
+
+<label>Título</label>
+
+<input
+type="text"
+id="titulo">
+
+<label>Descrição</label>
+
+<textarea
+id="descricao"
+rows="5"></textarea>
+
+<label>Imagem</label>
+
+<input
+type="text"
+id="imagem"
+placeholder="imagens/informativos/imagem.jpg">
+
+<label>Botão</label>
+
+<input
+type="text"
+id="botao"
+value="Saiba mais">
+
+<label>Link</label>
+
+<input
+type="text"
+id="link">
+
+<label>Data Inicial</label>
+
+<input
+type="date"
+id="inicio">
+
+<label>Data Final</label>
+
+<input
+type="date"
+id="fim">
+
+<label>Prioridade</label>
+
+<input
+type="number"
+id="prioridade"
+value="1">
+
+<div class="acoes">
+
+<button id="btnAdicionar">
+
+Adicionar
+
+</button>
+
+<input
+    type="file"
+    id="arquivoJson"
+    accept=".json"
+    hidden>
+
+<button id="btnImportar">
+    Importar JSON
+</button>
+
+<button id="btnExportar">
+    Exportar JSON
+</button>
+
+</div>
+
+</div>
+
+<h2>Informativos</h2>
+
+<div id="listaInformativos"></div>
+
+</div>
+
+<script src="js/ginformativos.js"></script>
+
+</body>
+
+</html>
