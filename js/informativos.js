@@ -4,6 +4,8 @@
    Parte 1 - Estrutura principal
 =========================================================== */
 
+const navegacao = document.querySelector(".modal-nav");
+
 const TEMPO_SLIDE = 4000;
 
 let informativos = [];
@@ -50,6 +52,8 @@ async function carregarInformativos() {
             return;
         }
 
+		atualizarNavegacao();
+		
 		preloadImagens();
 
 		criarIndicadores();
@@ -359,6 +363,14 @@ function slideAnterior(){
 
 function iniciarRotacao(){
 
+	if(informativos.length <= 1){
+
+	    progresso.style.width = "100%";
+
+	    return;
+
+	}
+	
     pararRotacao();
 
     iniciarBarra();
@@ -552,3 +564,29 @@ window.addEventListener("resize",()=>{
 
 });
 
+/* ===========================================================
+   MOSTRA OU ESCONDE A NAVEGAÇÃO
+=========================================================== */
+
+function atualizarNavegacao(){
+
+    if(informativos.length <= 1){
+
+        btnAnterior.style.display = "none";
+        btnProximo.style.display = "none";
+        indicadores.style.display = "none";
+
+        // opcional: esconder toda a linha
+        // navegacao.style.display = "none";
+
+    }else{
+
+        btnAnterior.style.display = "inline-block";
+        btnProximo.style.display = "inline-block";
+        indicadores.style.display = "flex";
+
+        // navegacao.style.display = "flex";
+
+    }
+
+}
